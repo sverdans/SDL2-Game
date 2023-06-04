@@ -13,6 +13,7 @@ private:
 	~GameInitializer() {}
 	GameInitializer(const GameInitializer&) {};
 	GameInitializer& operator = (GameInitializer&) {};
+	
 public:
 
 	int screen_width = 258 * 2;

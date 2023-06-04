@@ -1,10 +1,11 @@
 ﻿#include <iostream>
-#include "GameInitializer.h"
-#include "NameEntering.h"
-#include "game_records.h"
-#include "field.h"
-#include "manual.h"
-#include "menu.h"
+
+#include <GameInitializer.h>
+#include <NameEntering.h>
+#include <game_records.h>
+#include <Field.h>
+#include <manual.h>
+#include <Menu.h>
 
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 

@@ -1,8 +1,9 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include "GameInitializer.h"
-#include "GraphicElement.h"
+
+#include <GameInitializer.h>
+#include <GraphicElement.h>
 
 class NameEntering final : public GraphicElement
 {

@@ -1,7 +1,8 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include "GraphicElement.h"
+
+#include <GraphicElement.h>
 
 class Menu final : public GraphicElement
 {
