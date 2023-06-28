@@ -231,7 +231,6 @@ public:
 
 	~NameEntering()
 	{
-
 		SDL_DestroyTexture(background);
 		SDL_DestroyTexture(alphabet);
 		SDL_DestroyTexture(cursor);

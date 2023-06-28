@@ -1,5 +1,8 @@
 ﻿#include <iostream>
 
+#include <System/Window.h>
+#include <Renderer/Renderer.h>
+
 #include <GameInitializer.h>
 #include <NameEntering.h>
 #include <game_records.h>
@@ -454,17 +457,25 @@ bool event_handler(SDL_Event* game_event)
 
 int main(int argc, char** argv)
 {
-	SDL_Event event;
+	std::string problem;
 
-	if (gameInitializer.initialize() == false)
+	if (!Window::Instance().Initialize("2048", { 516, 644 }, problem))
 	{
-		gameInitializer.quitGame();
-		return 1;
+		std::cout << "Error: " << problem << std::endl;
+		return 0;
 	}
 
+	if (!Renderer::Instance().Initialize(problem))
+	{
+		std::cout << "Error: " << problem << std::endl;
+		return 0;
+	}
+
+	SDL_Event event;
 	while (event_handler(&event) == false);
 
-	gameInitializer.quitGame();
+	Renderer::Instance().Finalize();
+	Window::Instance().Finalize();
 
 	return 0;
 }
