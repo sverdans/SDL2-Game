@@ -15,7 +15,7 @@ private:
 	~Renderer() = default;
 
 	Vec2 mScale { 1, 1 };
-    SDL_Renderer* mpRenderer;
+    SDL_Renderer* mpRenderer { nullptr };
 
 public:
 	Renderer(const Renderer&) = delete;
@@ -30,21 +30,21 @@ public:
 		return instance;
 	}
 
-	bool Initialize(std::string problem)
+	bool Initialize(std::string sProblem)
 	{
 		mpRenderer = SDL_CreateRenderer(Window::Instance().GetWindowPointer(),
 			-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 		if (mpRenderer == nullptr)
 		{
-			problem = std::string("Can't create renderer: ", SDL_GetError());
+			sProblem = std::string("Can't create renderer: ", SDL_GetError());
 			return false;
 		}
 
 		auto flags = IMG_INIT_PNG;
 		if (!(IMG_Init(flags) & flags))
 		{
-			problem = std::string("Can't init image: ", IMG_GetError());
+			sProblem = std::string("Can't init image: ", IMG_GetError());
 			return false;
 		}
 
@@ -65,23 +65,15 @@ public:
 		IMG_Quit();
 	}
 
-	void SetClearColor(int r, int g, int b)
-	{
-		SDL_SetRenderDrawColor(mpRenderer, r, g, b, 255);
-	}
+	void SetClearColor(int r, int g, int b) { SDL_SetRenderDrawColor(mpRenderer, r, g, b, 255); }
 
-    void Clear()
-    {
-		SDL_RenderClear(mpRenderer);
-    }
+    void Clear() { SDL_RenderClear(mpRenderer); }
+
+    void Draw() { SDL_RenderPresent(mpRenderer); }
 
     void Render()
     {
+    }
 
-    }
-    
-    void Draw()
-    {
-		SDL_RenderPresent(mpRenderer);
-    }
+	SDL_Renderer* GetRenderer() { return mpRenderer; }
 };

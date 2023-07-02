@@ -2,6 +2,7 @@
 
 #include <System/Window.h>
 #include <Renderer/Renderer.h>
+#include <Game/Program.h>
 
 #include <GameInitializer.h>
 #include <NameEntering.h>
@@ -457,22 +458,36 @@ bool event_handler(SDL_Event* game_event)
 
 int main(int argc, char** argv)
 {
-	std::string problem;
+	std::string sProblem;
+	bool lShouldClose { false };
 
-	if (!Window::Instance().Initialize("2048", { 516, 644 }, problem))
+	if (!Window::Instance().Initialize("2048", { 516, 644 }, sProblem))
 	{
-		std::cout << "Error: " << problem << std::endl;
-		return 0;
+		std::cout << "Error: " << sProblem << std::endl;
+		return -1;
 	}
 
-	if (!Renderer::Instance().Initialize(problem))
+	if (!Renderer::Instance().Initialize(sProblem))
 	{
-		std::cout << "Error: " << problem << std::endl;
-		return 0;
+		std::cout << "Error: " << sProblem << std::endl;
+		return -1;
 	}
+	
+	Renderer::Instance().SetClearColor(117, 117, 117);
 
-	SDL_Event event;
-	while (event_handler(&event) == false);
+	while (!lShouldClose)
+	{
+		Renderer::Instance().Clear();
+
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) 
+		{
+			if (event.type == SDL_QUIT)
+				lShouldClose = true;
+		}
+		
+		Renderer::Instance().Draw();
+	}
 
 	Renderer::Instance().Finalize();
 	Window::Instance().Finalize();

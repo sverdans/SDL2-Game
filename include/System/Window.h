@@ -12,8 +12,8 @@ private:
 	Window() = default;
 	~Window() = default;
 
-	Vec2 mSize;
-	SDL_Window* mpWindow = nullptr;
+	Vec2 mSize { 800, 600 };
+	SDL_Window* mpWindow { nullptr };
 	std::string mTitle;
 
 public:
@@ -65,5 +65,4 @@ public:
 	}
 
 	SDL_Window* GetWindowPointer() { return mpWindow; }
-
 };

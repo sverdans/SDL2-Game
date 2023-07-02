@@ -47,8 +47,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_SOURCE_DIR}/include
     ${LIBS_DIR}/SDL/include
     ${LIBS_DIR}/SDL_image)
-    
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
     SDL2::SDL2
     SDL2_image::SDL2_image-static)
-    
