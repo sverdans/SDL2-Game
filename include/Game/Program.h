@@ -3,7 +3,9 @@
 
 #include <SDL.h>
 
-class ProgramState;
+#include <Game/ProgramStates/ProgramState.h>
+#include <Game/ProgramStates/GameIntro.h>
+#include <Renderer/ResourceManager.h>
 
 class Program
 {
@@ -21,12 +23,30 @@ private:
 	};
 
 	EnState meState;
-	std::map<EnState, ProgramState*> mPorgamStateMap;
+	
 public:
 
-	Program() : meState(EnState::eInMenu) { }
+	Program() : meState(EnState::eInIntro) 
+	{
+		
+
+	}
+
+	bool Initialize()
+	{
+		auto pGameIntroBackground = ResourceManager::Instance().GetSprite("GameIntroBackground");
+		if (!pGameIntroBackground)
+			return;
+
+		IProgramState* pGameIntro = new GameIntro(pGameIntroBackground);	
+	}
 
 	void Update(const SDL_Event& event)
+	{
+
+	}
+
+	void Draw()
 	{
 
 	}

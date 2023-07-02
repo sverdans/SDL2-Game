@@ -68,12 +68,13 @@ public:
 	void SetClearColor(int r, int g, int b) { SDL_SetRenderDrawColor(mpRenderer, r, g, b, 255); }
 
     void Clear() { SDL_RenderClear(mpRenderer); }
+    void Render() { SDL_RenderPresent(mpRenderer); }
 
-    void Draw() { SDL_RenderPresent(mpRenderer); }
+    void Draw() 
+	{  
 
-    void Render()
-    {
-    }
+	}
+
 
 	SDL_Renderer* GetRenderer() { return mpRenderer; }
 };

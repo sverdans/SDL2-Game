@@ -474,6 +474,7 @@ int main(int argc, char** argv)
 	}
 	
 	Renderer::Instance().SetClearColor(117, 117, 117);
+	Program program;
 
 	while (!lShouldClose)
 	{
@@ -484,9 +485,12 @@ int main(int argc, char** argv)
 		{
 			if (event.type == SDL_QUIT)
 				lShouldClose = true;
+			
+			program.Update(event);
 		}
-		
-		Renderer::Instance().Draw();
+
+		program.Draw();
+		Renderer::Instance().Render();
 	}
 
 	Renderer::Instance().Finalize();
