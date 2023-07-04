@@ -1,6 +1,6 @@
 #pragma once
 #include <Game/ProgramStates/ProgramState.h>
-#include <Renderer/Sprite.h>
+#include <Resources/Sprite.h>
 
 class GameIntro final : public IProgramState
 {
@@ -13,7 +13,11 @@ public:
 
 	}
 
-	void Update(const SDL_Event& event) override { }
+	void Update(const SDL_Event& event) override 
+	{
+
+	}
+	
 	void Draw() override 
 	{
 

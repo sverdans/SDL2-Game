@@ -1,7 +1,9 @@
 ﻿#include <iostream>
+#include <filesystem>
+#include <vector>
 
+#include <Resources/ResourceManager.h>
 #include <System/Window.h>
-#include <Renderer/Renderer.h>
 #include <Game/Program.h>
 
 #include <GameInitializer.h>
@@ -10,8 +12,6 @@
 #include <Field.h>
 #include <manual.h>
 #include <Menu.h>
-
-#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 bool event_handler(SDL_Event* game_event)
 {
@@ -464,21 +464,37 @@ int main(int argc, char** argv)
 	if (!Window::Instance().Initialize("2048", { 516, 644 }, sProblem))
 	{
 		std::cout << "Error: " << sProblem << std::endl;
-		return -1;
-	}
-
-	if (!Renderer::Instance().Initialize(sProblem))
-	{
-		std::cout << "Error: " << sProblem << std::endl;
+		Window::Instance().Finalize();
 		return -1;
 	}
 	
-	Renderer::Instance().SetClearColor(117, 117, 117);
+	{
+		std::filesystem::path path(argv[0]);
+		std::string sResourcesDir = path.parent_path().parent_path().string() + "/resources/";
+		ResourceManager::Instance().SetRootDir(sResourcesDir);
+		
+		std::vector<std::pair<std::string, std::string>> texturePaths = {
+			{ "GameIntroBackground", "petrov.a.e..png" },
+		};
+
+		for (const auto& [sTextureName, sFilePath] : texturePaths)
+		{
+			if (!ResourceManager::Instance().LoadTexture(sTextureName, sFilePath, sProblem))
+			{
+				std::cout << "Error: " << sProblem << std::endl;
+				ResourceManager::Instance().Clear();
+				Window::Instance().Finalize();
+				return -1;
+			}
+		}
+	}
+
+	Window::Instance().SetClearColor(117, 117, 117);
 	Program program;
 
 	while (!lShouldClose)
 	{
-		Renderer::Instance().Clear();
+		Window::Instance().Clear();
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) 
@@ -490,11 +506,11 @@ int main(int argc, char** argv)
 		}
 
 		program.Draw();
-		Renderer::Instance().Render();
+		
+		Window::Instance().Render();
 	}
 
-	Renderer::Instance().Finalize();
+	ResourceManager::Instance().Clear();
 	Window::Instance().Finalize();
-
 	return 0;
 }

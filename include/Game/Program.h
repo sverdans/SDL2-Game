@@ -5,7 +5,7 @@
 
 #include <Game/ProgramStates/ProgramState.h>
 #include <Game/ProgramStates/GameIntro.h>
-#include <Renderer/ResourceManager.h>
+#include <Resources/ResourceManager.h>
 
 class Program
 {
@@ -36,9 +36,10 @@ public:
 	{
 		auto pGameIntroBackground = ResourceManager::Instance().GetSprite("GameIntroBackground");
 		if (!pGameIntroBackground)
-			return;
+			return false;
 
-		IProgramState* pGameIntro = new GameIntro(pGameIntroBackground);	
+		IProgramState* pGameIntro = new GameIntro(pGameIntroBackground);
+		return true;	
 	}
 
 	void Update(const SDL_Event& event)

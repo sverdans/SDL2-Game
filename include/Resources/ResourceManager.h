@@ -6,8 +6,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include <Renderer/Renderer.h>
-#include <Renderer/Sprite.h>
+#include <System/Window.h>
+#include <Resources/Sprite.h>
 
 class ResourceManager final
 {
@@ -15,6 +15,7 @@ private:
 	ResourceManager() = default;
 	~ResourceManager() = default;
 	
+	std::string msRootDir;
 	std::map<std::string, SDL_Texture*> mTexturesMap;
 	std::map<std::string, Sprite*> mSpritesMap;
 
@@ -31,6 +32,8 @@ public:
 		return instance;
 	}
 
+	void SetRootDir(const std::string& sRootDir) { msRootDir = sRootDir; }
+
 	SDL_Texture* LoadTexture(const std::string& sTextureName, const std::string& sFilePath, std::string& sProblem)
 	{
 		if (mTexturesMap.find(sTextureName) != mTexturesMap.end())
@@ -39,16 +42,16 @@ public:
 			return nullptr;
 		}
 
-		auto pSurface = IMG_Load(sFilePath.c_str());
-		if (pSurface)
+		auto pSurface = IMG_Load((msRootDir + sFilePath).c_str());
+		if (!pSurface)
 		{
 			sProblem = "Can not load surface from '" + sFilePath + "'";
 			return nullptr;
 		}
 
-		auto pTexture = SDL_CreateTextureFromSurface(Renderer::Instance().GetRenderer(), pSurface);
+		auto pTexture = SDL_CreateTextureFromSurface(Window::Instance().GetRendererPointer(), pSurface);
 		SDL_FreeSurface(pSurface);
-		if (pTexture)
+		if (!pTexture)
 		{
 			sProblem = "Can not create texture '" + sTextureName + "' from surface";
 			return nullptr;
