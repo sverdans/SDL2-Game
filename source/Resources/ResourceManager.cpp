@@ -52,7 +52,7 @@ SDL_Texture* ResourceManager::GetTexture(const std::string& sTextureName)
 
 Sprite* ResourceManager::LoadSprite(const std::string& sSpriteName,
 					const std::string& sTextureName,
-					int x, int y, int w, int h,
+					const SDL_Rect& srcRect,
 					std::string& sProblem)
 {
 	return nullptr;

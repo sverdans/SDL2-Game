@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <string>
 #include <SDL.h>
 
 class IProgramState;
@@ -27,7 +28,7 @@ private:
 public:
 	Program();
 
-	bool Initialize();
+	bool Initialize(std::string& sProblem);
 	void SetState(const EnState eState);
 	void Update(const SDL_Event& event);
 	void Draw();

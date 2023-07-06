@@ -36,7 +36,7 @@ public:
 
 	void SetClearColor(int r, int g, int b);
 
-	void Draw();
+	void Draw(SDL_Texture* pTexture, SDL_Rect& srcRect, SDL_Rect& dstRect);
 	void Clear();
     void Render();
 

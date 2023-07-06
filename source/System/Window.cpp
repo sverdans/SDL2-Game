@@ -76,7 +76,10 @@ void Window::Finalize()
 // range: 0-255
 void Window::SetClearColor(int r, int g, int b) { SDL_SetRenderDrawColor(mpRenderer, r, g, b, 255); }
 
-void Window::Draw() { }
+void Window::Draw(SDL_Texture* pTexture, SDL_Rect& srcRect, SDL_Rect& dstRect) 
+{
+	SDL_RenderCopy(mpRenderer, pTexture, &srcRect, &dstRect);
+}
 void Window::Clear() { SDL_RenderClear(mpRenderer); }
 void Window::Render() { SDL_RenderPresent(mpRenderer); }
 

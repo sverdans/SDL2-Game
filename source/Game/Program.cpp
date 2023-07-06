@@ -9,8 +9,16 @@ Program::Program() : mState(EnState::eInIntro)
 	mProgramStatesMap[EnState::eInIntro] = new GameIntro(this);
 }
 
-bool Program::Initialize() 
+bool Program::Initialize(std::string& sProblem) 
 {
+	for (const auto& [eState, pProgramState] : mProgramStatesMap)
+	{
+		if (!pProgramState->Initialize())
+		{
+			sProblem = "ProgramState with ID: " + std::to_string(eState) + " can not be initialized";
+			return false;
+		}
+	}
 	return true;
 }
 

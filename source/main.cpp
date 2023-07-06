@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <filesystem>
 #include <vector>
+#include <tuple>
 
 #include <Resources/ResourceManager.h>
 #include <System/Window.h>
@@ -31,13 +32,26 @@ int main(int argc, char** argv)
 		std::string sResourcesDir = path.parent_path().parent_path().string() + "/resources/";
 		ResourceManager::Instance().SetRootDir(sResourcesDir);
 		
-		std::vector<std::pair<std::string, std::string>> texturePaths = {
+		std::vector<std::pair<std::string, std::string>> textures = {
 			{ "GameIntroBackground", "petrov.a.e..png" },
 		};
 
-		for (const auto& [sTextureName, sFilePath] : texturePaths)
+		for (const auto& [sTextureName, sFilePath] : textures)
 		{
 			if (!ResourceManager::Instance().LoadTexture(sTextureName, sFilePath, sProblem))
+			{
+				std::cout << "Error: " << sProblem << std::endl;
+				Quit(-1);
+			}
+		}
+
+		std::vector<std::tuple<std::string, std::string, SDL_Rect>> sprites = {
+			{ "GameIntroBackground", "GameIntroBackground", {0, 0, 300, 300} },
+		};
+
+		for (const auto& [sSpriteName, sTextureName, srcRect] : sprites)
+		{
+			if (!ResourceManager::Instance().LoadSprite(sSpriteName, sTextureName, srcRect, sProblem))
 			{
 				std::cout << "Error: " << sProblem << std::endl;
 				Quit(-1);
@@ -46,9 +60,15 @@ int main(int argc, char** argv)
 	}
 
 	Program program;
+	if (!program.Initialize(sProblem))
+	{
+		std::cout << "Error: " << sProblem << std::endl;
+		Quit(-1);
+	}
 
 	Window::Instance().SetClearColor(117, 117, 117);
 
+//--Program-Loop----------------------------------------------------------------------------------------------------
 	while (!lShouldClose)
 	{
 		Window::Instance().Clear();

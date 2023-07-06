@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-
 #include <SDL.h>
 
 #include <Math/Vec2.h>
