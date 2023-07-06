@@ -2,15 +2,20 @@
 #include <Game/ProgramStates/ProgramState.h>
 #include <Resources/Sprite.h>
 
+class Program;
+
 class GameIntro final : public IProgramState
 {
 private:
 	Sprite* mpBackground;
 
 public:
-	GameIntro(Sprite* pBackground) : mpBackground(pBackground)
-	{
+	GameIntro(Program* pProgram) : IProgramState(pProgram) { }
 
+	bool Initialize() override
+	{
+		
+		return true;
 	}
 
 	void Update(const SDL_Event& event) override 

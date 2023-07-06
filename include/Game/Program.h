@@ -9,8 +9,8 @@
 
 class Program
 {
-private:
-	enum class EnState
+public:
+	enum EnState
 	{
 		eInIntro,
 		eInMenu,
@@ -22,33 +22,39 @@ private:
 		eInExit,
 	};
 
-	EnState meState;
-	
+private:
+
+	EnState mState;
+	std::map<EnState, IProgramState*> mProgramStatesMap;
+
+
 public:
 
-	Program() : meState(EnState::eInIntro) 
+	Program() : mState(EnState::eInIntro) 
 	{
-		
-
+		mProgramStatesMap[EnState::eInIntro] = new GameIntro(this);
 	}
 
-	bool Initialize()
+	void AddState(const EnState eState, IProgramState* pProgramState)
 	{
-		auto pGameIntroBackground = ResourceManager::Instance().GetSprite("GameIntroBackground");
-		if (!pGameIntroBackground)
-			return false;
+		if (mProgramStatesMap.find(eState) != mProgramStatesMap.end())
+			return;
 
-		IProgramState* pGameIntro = new GameIntro(pGameIntroBackground);
-		return true;	
+		mProgramStatesMap[eState] = pProgramState;
+	}
+
+	void SetState(const EnState eState)
+	{
+		mState = eState;
 	}
 
 	void Update(const SDL_Event& event)
 	{
-
+		mProgramStatesMap[mState]->Update(event);
 	}
 
 	void Draw()
 	{
-
+		mProgramStatesMap[mState]->Draw();
 	}
 };

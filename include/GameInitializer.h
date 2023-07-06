@@ -1,18 +1,20 @@
 #pragma once
+#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 
 #define gameInitializer GameInitializer::get_instance()
+
 using namespace std;
 
 class GameInitializer final
 {
 private:
 
-	GameInitializer() {}
-	~GameInitializer() {}
-	GameInitializer(const GameInitializer&) {};
-	GameInitializer& operator = (GameInitializer&) {};
+	GameInitializer() = default;
+	~GameInitializer() = default;
+	GameInitializer(const GameInitializer&) = delete;
+	GameInitializer& operator = (GameInitializer&) = delete;
 	
 public:
 
@@ -33,21 +35,21 @@ public:
 
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
-			cout << "Can't init: " << SDL_GetError() << endl;
+			std::cout << "Can't init: " << SDL_GetError() << std::endl;
 			ok = false;
 		}
 
 		window = SDL_CreateWindow("2048", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (window == nullptr)
 		{
-			cout << "Can't create window: " << SDL_GetError() << endl;
+			std::cout << "Can't create window: " << SDL_GetError() << std::endl;
 			ok = false;
 		}
 
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if (renderer == nullptr)
 		{
-			cout << "Can't create renderer: " << SDL_GetError() << endl;
+			std::cout << "Can't create renderer: " << SDL_GetError() << std::endl;
 			ok = false;
 		}
 
@@ -56,7 +58,7 @@ public:
 		int flags = IMG_INIT_PNG;
 		if (!(IMG_Init(flags) & flags))
 		{
-			cout << "Can't init image: " << IMG_GetError() << endl;
+			std::cout << "Can't init image: " << IMG_GetError() << std::endl;
 			ok = false;
 		}
 
