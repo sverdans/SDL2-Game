@@ -1,4 +1,3 @@
-#pragma once
 #include <string>
 
 #include <SDL.h>
@@ -26,7 +25,7 @@ bool Window::Initialize(const std::string& title, const Vec2& size, std::string&
 	}
 
 	mpWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		mSize.mX, mSize.mY, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		mSize.x, mSize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
 	if (mpWindow == nullptr)
 	{
@@ -50,7 +49,7 @@ bool Window::Initialize(const std::string& title, const Vec2& size, std::string&
 		return false;
 	}
 
-	SDL_RenderSetScale(mpRenderer, mScale.mX, mScale.mY);
+	SDL_RenderSetScale(mpRenderer, mScale.x, mScale.y);
 	SetClearColor(0, 0, 0);
 
 	return true;
@@ -74,6 +73,7 @@ void Window::Finalize()
 	SDL_Quit();
 }
 
+// range: 0-255
 void Window::SetClearColor(int r, int g, int b) { SDL_SetRenderDrawColor(mpRenderer, r, g, b, 255); }
 
 void Window::Draw() { }

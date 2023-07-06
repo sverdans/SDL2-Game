@@ -2,10 +2,10 @@
 
 struct Vec3
 {
-	int mX;
-	int mY;
-	int mZ;
+	int x;
+	int y;
+	int z;
 
-	Vec3() : mX(0), mY(0), mZ(0) { }
-	Vec3(int x, int y, int z) : mX(x), mY(y), mZ(z) { }
+	Vec3() : x(0), y(0), z(0) { }
+	Vec3(int x, int y, int z) : x(x), y(y), z(z) { }
 };

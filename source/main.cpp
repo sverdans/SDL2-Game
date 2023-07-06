@@ -6,10 +6,11 @@
 #include <System/Window.h>
 #include <Game/Program.h>
 
-void Quit()
+inline void Quit(int code)
 {
 	ResourceManager::Instance().Clear();
 	Window::Instance().Finalize();
+	exit(code);
 }
 
 int main(int argc, char** argv)
@@ -21,11 +22,10 @@ int main(int argc, char** argv)
 	if (!Window::Instance().Initialize("2048", { 516, 644 }, sProblem))
 	{
 		std::cout << "Error: " << sProblem << std::endl;
-		Quit();
-		return -1;
+		Quit(-1);
 	}
 	
-//--Loading Resources-----------------------------------------------------------------------------------------------
+//--Loading-Resources-----------------------------------------------------------------------------------------------
 	{
 		std::filesystem::path path(argv[0]);
 		std::string sResourcesDir = path.parent_path().parent_path().string() + "/resources/";
@@ -40,8 +40,7 @@ int main(int argc, char** argv)
 			if (!ResourceManager::Instance().LoadTexture(sTextureName, sFilePath, sProblem))
 			{
 				std::cout << "Error: " << sProblem << std::endl;
-				Quit();
-				return -1;
+				Quit(-1);
 			}
 		}
 	}
@@ -58,8 +57,11 @@ int main(int argc, char** argv)
 		while (SDL_PollEvent(&event)) 
 		{
 			if (event.type == SDL_QUIT)
+			{
 				lShouldClose = true;
-			
+				break;
+			}
+
 			program.Update(event);
 		}
 
@@ -68,6 +70,5 @@ int main(int argc, char** argv)
 		Window::Instance().Render();
 	}
 
-	Quit();
-	return 0;
+	Quit(0);
 }
