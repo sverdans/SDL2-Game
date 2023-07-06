@@ -1,5 +1,5 @@
 #pragma once
-#include <Game/ProgramStates/ProgramState.h>
+#include <Game/IProgramState.h>
 #include <Resources/Sprite.h>
 
 class Program;
@@ -14,7 +14,7 @@ public:
 
 	bool Initialize() override
 	{
-		
+
 		return true;
 	}
 

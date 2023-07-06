@@ -1,7 +1,3 @@
-#include <string>
-#include <memory>
-#include <map>
-
 #include <SDL.h>
 #include <SDL_image.h>
 

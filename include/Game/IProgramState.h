@@ -9,11 +9,10 @@ protected:
     Program* mpProgram;
 
 public:
-    IProgramState(Program* pProgram) : mpProgram(pProgram) { }
-    virtual ~IProgramState() { }
+    IProgramState(Program* pProgram);
+    virtual ~IProgramState();
 
     virtual bool Initialize() = 0;
-
     virtual void Draw() = 0;
     virtual void Update(const SDL_Event& event) = 0;
 };
