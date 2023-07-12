@@ -48,7 +48,7 @@ bool Window::Initialize(const std::string& title, const Vec2& size, std::string&
 		return false;
 	}
 
-	SDL_RenderSetScale(mpRenderer, mScale.x, mScale.y);
+	SetScale(mScale.x, mScale.y);
 	SetClearColor(0, 0, 0);
 
 	return true;
@@ -72,8 +72,17 @@ void Window::Finalize()
 	SDL_Quit();
 }
 
+void Window::SetScale(int x, int y)
+{
+	mScale.x = x; 
+	mScale.y = y;
+	SDL_RenderSetScale(mpRenderer, x, y);
+}
 // range: 0-255
-void Window::SetClearColor(int r, int g, int b) { SDL_SetRenderDrawColor(mpRenderer, r, g, b, 255); }
+void Window::SetClearColor(int r, int g, int b)
+{
+	SDL_SetRenderDrawColor(mpRenderer, r, g, b, 255);
+}
 
 void Window::Draw(SDL_Texture* pTexture, SDL_Rect* srcRect, SDL_Rect* dstRect) 
 {

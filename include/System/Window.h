@@ -35,6 +35,7 @@ public:
 
 	void Finalize();
 
+	void SetScale(int x, int y);
 	void SetClearColor(int r, int g, int b);
 
 	void Draw(SDL_Texture* pTexture, SDL_Rect* srcRect, SDL_Rect* dstRect);

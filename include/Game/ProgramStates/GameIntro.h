@@ -1,6 +1,7 @@
 #pragma once
 #include <Game/IProgramState.h>
 #include <System/Resources.h>
+#include <System/Constants.h>
 #include <Resources/Sprite.h>
 
 class Program;
@@ -29,6 +30,6 @@ public:
 	
 	void Draw() override 
 	{
-		mpBackground->Render({ 0, 0 }, { 300, 300 });
+		mpBackground->Render({ 0, 0 }, { CONST::WIDTH, CONST::HEIGHT });
 	}
 };

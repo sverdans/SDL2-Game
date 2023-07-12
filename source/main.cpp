@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 		}
 
 		std::vector<std::tuple<std::string, std::string, SDL_Rect>> sprites = {
-			{ "GameIntroBackground", "GameIntroBackground", { 0, 0, 300, 300 } },
+			{ "GameIntroBackground", "GameIntroBackground", { 0, 0, 500, 500 } },
 		};
 
 		for (const auto& [sSpriteName, sTextureName, srcRect] : sprites)
