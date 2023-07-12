@@ -83,7 +83,7 @@ void Window::OnResize()
 
 	mScale = (ratio < CONST::RATIO)
 		? static_cast<float>(mSize.x) / CONST::WIDTH
-		: mScale = static_cast<float>(mSize.y) / CONST::HEIGHT;
+		: static_cast<float>(mSize.y) / CONST::HEIGHT;
 
 	SDL_RenderSetScale(mpRenderer, mScale, mScale);
 }
