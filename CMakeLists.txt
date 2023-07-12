@@ -5,6 +5,9 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(BUILD_SHARED_LIBS OFF)
 set(PROJECT_NAME 2048)
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 if(NOT PKG_CONFIG_FOUND)

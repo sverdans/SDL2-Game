@@ -3,6 +3,7 @@
 
 #include <Math/Vec2.h>
 
+class SDL_Rect;
 class SDL_Window;
 class SDL_Renderer;
 
@@ -36,7 +37,7 @@ public:
 
 	void SetClearColor(int r, int g, int b);
 
-	void Draw(SDL_Texture* pTexture, SDL_Rect& srcRect, SDL_Rect& dstRect);
+	void Draw(SDL_Texture* pTexture, SDL_Rect* srcRect, SDL_Rect* dstRect);
 	void Clear();
     void Render();
 

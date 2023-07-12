@@ -2,27 +2,29 @@
 #include <string>
 #include <map>
 
+#include <SDL.h>
+
 class SDL_Texture;
 class Sprite;
 
-class ResourceManager final
+class Resources final
 {
 private:
-	ResourceManager() = default;
-	~ResourceManager() = default;
+	Resources() = default;
+	~Resources() = default;
 	
 	std::string msRootDir;
 	std::map<std::string, SDL_Texture*> mTexturesMap;
 	std::map<std::string, Sprite*> mSpritesMap;
 
 public:
-	ResourceManager(const ResourceManager &) = delete;
-	ResourceManager(ResourceManager &&) = delete;
+	Resources(const Resources &) = delete;
+	Resources(Resources &&) = delete;
 
-	ResourceManager& operator=(const ResourceManager &) = delete;
-	ResourceManager& operator=(ResourceManager &&) = delete;
+	Resources& operator=(const Resources &) = delete;
+	Resources& operator=(Resources &&) = delete;
 
-	static ResourceManager& Instance();
+	static Resources& Instance();
 
 	void SetRootDir(const std::string& sRootDir);
 

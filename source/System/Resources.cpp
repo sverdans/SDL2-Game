@@ -1,20 +1,20 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include <Resources/ResourceManager.h>
 #include <System/Window.h>
+#include <System/Resources.h>
 #include <Resources/Sprite.h>
 
 
-ResourceManager& ResourceManager::Instance()
+Resources& Resources::Instance()
 {
-	static ResourceManager instance;
+	static Resources instance;
 	return instance;
 }
 
-void ResourceManager::SetRootDir(const std::string& sRootDir) { msRootDir = sRootDir; }
+void Resources::SetRootDir(const std::string& sRootDir) { msRootDir = sRootDir; }
 
-SDL_Texture* ResourceManager::LoadTexture(const std::string& sTextureName, const std::string& sFilePath, std::string& sProblem)
+SDL_Texture* Resources::LoadTexture(const std::string& sTextureName, const std::string& sFilePath, std::string& sProblem)
 {
 	if (mTexturesMap.find(sTextureName) != mTexturesMap.end())
 	{
@@ -41,7 +41,7 @@ SDL_Texture* ResourceManager::LoadTexture(const std::string& sTextureName, const
 	return pTexture;
 }	
 
-SDL_Texture* ResourceManager::GetTexture(const std::string& sTextureName)
+SDL_Texture* Resources::GetTexture(const std::string& sTextureName)
 {
 	auto it = mTexturesMap.find(sTextureName);
 	if (it != mTexturesMap.end())
@@ -50,24 +50,40 @@ SDL_Texture* ResourceManager::GetTexture(const std::string& sTextureName)
 	return nullptr;
 }
 
-Sprite* ResourceManager::LoadSprite(const std::string& sSpriteName,
+Sprite* Resources::LoadSprite(const std::string& sSpriteName,
 					const std::string& sTextureName,
 					const SDL_Rect& srcRect,
 					std::string& sProblem)
 {
-	return nullptr;
+	if (mSpritesMap.find(sSpriteName) != mSpritesMap.end())
+	{
+		sProblem = "Sprite with name '" + sTextureName + "' already exist";
+		return nullptr;
+	}
+
+	auto pTexture = GetTexture(sTextureName);
+	if (!pTexture)
+	{
+		sProblem = "Texture with name '" + sTextureName + "' was not foud";
+		return nullptr;
+	}
+
+	auto pSprite = new Sprite(pTexture, srcRect);
+	mSpritesMap[sSpriteName] = pSprite;
+	
+	return pSprite;
 }
 
-Sprite* ResourceManager::GetSprite(const std::string& sSpriteName)
+Sprite* Resources::GetSprite(const std::string& sSpriteName)
 {
 	auto it = mSpritesMap.find(sSpriteName);
 	if (it != mSpritesMap.end())
 		return it->second;
 		
-	else return nullptr;
+	return nullptr;
 }
 
-void ResourceManager::Clear()
+void Resources::Clear()
 {
 	for (auto& [sTextureName, pTexture] : mTexturesMap)
 	{

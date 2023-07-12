@@ -7,5 +7,5 @@ Sprite::Sprite(SDL_Texture* pTexture, const SDL_Rect& RectInFile)
 void Sprite::Render(const Vec2& position, const Vec2& size)
 {
 	SDL_Rect dstRec { position.x, position.y, size.x, size.y };
-	Window::Instance().Draw(mpTexture, mRectInFile, dstRec);
+	Window::Instance().Draw(mpTexture, &mRectInFile, &dstRec);
 }

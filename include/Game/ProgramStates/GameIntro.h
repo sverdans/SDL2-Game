@@ -1,5 +1,6 @@
 #pragma once
 #include <Game/IProgramState.h>
+#include <System/Resources.h>
 #include <Resources/Sprite.h>
 
 class Program;
@@ -14,6 +15,9 @@ public:
 
 	bool Initialize() override
 	{
+		mpBackground = Resources::Instance().GetSprite("GameIntroBackground");
+		if (!mpBackground)
+			return false;
 
 		return true;
 	}
@@ -25,6 +29,6 @@ public:
 	
 	void Draw() override 
 	{
-
+		mpBackground->Render({ 0, 0 }, { 300, 300 });
 	}
 };

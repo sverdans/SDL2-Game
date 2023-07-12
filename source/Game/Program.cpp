@@ -1,8 +1,7 @@
 #include <Game/Program.h>
 #include <Game/IProgramState.h>
 #include <Game/ProgramStates/GameIntro.h>
-#include <Resources/ResourceManager.h>
-
+#include <System/Resources.h>
 
 Program::Program() : mState(EnState::eInIntro) 
 {
