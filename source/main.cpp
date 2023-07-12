@@ -74,15 +74,24 @@ int main(int argc, char** argv)
 		Window::Instance().Clear();
 
 		SDL_Event event;
+
 		while (SDL_PollEvent(&event)) 
 		{
-			if (event.type == SDL_QUIT)
+			switch (event.type)
 			{
-				lShouldClose = true;
-				break;
-			}
+				case SDL_QUIT:
+					lShouldClose = true;
+					break;
 
-			program.Update(event);
+				case SDL_WINDOWEVENT:
+					if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+						Window::Instance().OnResize();
+					break;
+
+				default:
+					program.Update(event);
+					break;
+			}
 		}
 
 		program.Draw();

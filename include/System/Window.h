@@ -16,7 +16,7 @@ private:
 	std::string mTitle;
 
 	Vec2 mSize { 800, 600 };
-	Vec2 mScale { 1, 1 };
+	float mScale { 1 };
 
 	SDL_Window* mpWindow { nullptr };
     SDL_Renderer* mpRenderer { nullptr };
@@ -32,10 +32,9 @@ public:
 	static Window& Instance();
 
 	bool Initialize(const std::string& title, const Vec2& size, std::string& sProblem);
-
 	void Finalize();
 
-	void SetScale(int x, int y);
+	void OnResize();
 	void SetClearColor(int r, int g, int b);
 
 	void Draw(SDL_Texture* pTexture, SDL_Rect* srcRect, SDL_Rect* dstRect);

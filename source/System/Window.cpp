@@ -1,8 +1,10 @@
+#include <iostream>
 #include <string>
 
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include <System/Constants.h>
 #include <System/Window.h>
 #include <Math/Vec2.h>
 
@@ -48,8 +50,9 @@ bool Window::Initialize(const std::string& title, const Vec2& size, std::string&
 		return false;
 	}
 
-	SetScale(mScale.x, mScale.y);
+	SDL_SetWindowMinimumSize(mpWindow, CONST::WIDTH, CONST::HEIGHT);
 	SetClearColor(0, 0, 0);
+	OnResize();
 
 	return true;
 }
@@ -72,12 +75,19 @@ void Window::Finalize()
 	SDL_Quit();
 }
 
-void Window::SetScale(int x, int y)
+void Window::OnResize()
 {
-	mScale.x = x; 
-	mScale.y = y;
-	SDL_RenderSetScale(mpRenderer, x, y);
+	SDL_GetWindowSize(mpWindow, &mSize.x, &mSize.y);
+
+    float ratio = static_cast<float>(mSize.x) / mSize.y;
+
+	mScale = (ratio < CONST::RATIO)
+		? static_cast<float>(mSize.x) / CONST::WIDTH
+		: mScale = static_cast<float>(mSize.y) / CONST::HEIGHT;
+
+	SDL_RenderSetScale(mpRenderer, mScale, mScale);
 }
+
 // range: 0-255
 void Window::SetClearColor(int r, int g, int b)
 {
